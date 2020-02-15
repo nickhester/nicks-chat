@@ -1,43 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import Conversation from './Components/Conversation/Conversation';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { word: undefined };
+    this.state = { messages: []};
   }
 
   componentDidMount() {
-    this.callServer()
-      .then(res => this.setState({word: res.message}))
+    this.getConversation()
+      .then(res => this.setState({messages: res.messages}))
       .catch(err => console.log(err));
   }
 
-  callServer = async () => {
-    const response = await fetch('/ping');
+  handleNewLocalInput = (input) => {
+    this.postToConversation(input);
+
+    this.getConversation(input)
+      .then(res => this.setState({messages: res.messages}))
+      .catch(err => console.log(err));
+  }
+
+  getConversation = async () => {
+    const response = await fetch('/conversation');
     const body = await response.json();
     return body;
+  }
+
+  postToConversation = async (body) => {
+    const response = await fetch('/conversation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    return await response.json();
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            {this.state.word ? this.state.word : '---'}
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Conversation
+          id={'test-conversation'}
+          messages={this.state.messages}
+          handleNewInputSubmitted={this.handleNewLocalInput}
+        />
       </div>
     );
   }

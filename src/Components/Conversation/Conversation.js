@@ -37,6 +37,11 @@ export default class Conversation extends React.Component {
                 <ConversationInput
                     onInputSubmit={this.handleNewInputSubmitted}
                 />
+                <input
+                    type="button"
+                    onClick={this.props.getLatestMessages}
+                    value="Refresh"
+                />
             </div>
         )
     }

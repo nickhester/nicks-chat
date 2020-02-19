@@ -8,6 +8,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <NickChatWrapper />
+        <p>v 0.0.1</p>
       </div>
     );
   }

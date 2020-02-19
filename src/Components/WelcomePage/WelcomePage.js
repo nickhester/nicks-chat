@@ -24,7 +24,8 @@ export default class WelcomePage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <label htmlFor="name-input">Enter a name</label>
+                <h2>Welcome to Nick Chat!</h2>
+                <label htmlFor="name-input">Enter a name for yourself</label>
                 <input
                     id="name-input"
                     type="text"

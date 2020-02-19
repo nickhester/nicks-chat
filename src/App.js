@@ -10,17 +10,18 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getConversation()
-      .then(res => this.setState({messages: res.messages}))
-      .catch(err => console.log(err));
+    this.callGetConversation();
   }
 
   handleNewLocalInput = (input) => {
     this.postToConversation(input);
+    this.callGetConversation();
+  }
 
-    this.getConversation(input)
-      .then(res => this.setState({messages: res.messages}))
-      .catch(err => console.log(err));
+  callGetConversation = () => {
+    this.getConversation()
+    .then(res => this.setState({messages: res.messages}))
+    .catch(err => console.log(err));
   }
 
   getConversation = async () => {

@@ -4,6 +4,10 @@ import './Conversation.scss';
 import ConversationInput from '../ConversationInput/ConversationInput';
 
 export default class Conversation extends React.Component {
+    componentDidMount() {
+        this.props.getLatestMessages();
+    }
+
     displayMessages = () => {
         return this.props.messages.map(msg => {
             return (
@@ -22,7 +26,7 @@ export default class Conversation extends React.Component {
     handleNewInputSubmitted = (message) => {
         this.props.handleNewInputSubmitted({
             text: message,
-            author: 'nick'
+            author: this.props.currentAuthor
         })
     }
 
@@ -46,4 +50,6 @@ Conversation.propTypes = {
     })).isRequired,
     id: PropTypes.string.isRequired,
     handleNewInputSubmitted: PropTypes.func,
+    getLatestMessages: PropTypes.func,
+    currentAuthor: PropTypes.string,
 }
